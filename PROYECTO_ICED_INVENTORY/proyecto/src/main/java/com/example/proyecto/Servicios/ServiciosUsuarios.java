@@ -23,7 +23,7 @@ public class ServiciosUsuarios {
 
     public Usuario mostrarUsuarioCorreo(String email){
         Usuario usu=null;
-        usu=reposiUsu.findBycorreo(email);
+        usu=reposiUsu.findByEmail(email);
         return usu;
     }
 

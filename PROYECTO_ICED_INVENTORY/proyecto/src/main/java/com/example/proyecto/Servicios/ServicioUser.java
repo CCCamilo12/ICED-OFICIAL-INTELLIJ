@@ -39,7 +39,7 @@ public class ServicioUser {
             String name = (String) dataUser.get("nickname");
             String imag = (String) dataUser.get("picture");
             String auth_id = (String) dataUser.get("sub");
-            if (reposiUsu.findBycorreo(email)!=null){
+            if (reposiUsu.findByEmail(email)!=null){
                 rol="Usuario";
             }
             else{

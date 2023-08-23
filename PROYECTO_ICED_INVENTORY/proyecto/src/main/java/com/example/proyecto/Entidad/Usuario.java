@@ -29,7 +29,7 @@ public class Usuario {
     private String Usu_Celular;
 
     @Column(nullable = false, length = 100, unique = true)
-    private String Usu_Correo;
+    private String email;
 
     @Column(nullable = false, length = 100)
     private String Usu_Ficha;
@@ -46,7 +46,7 @@ public class Usuario {
         this.Usu_Apellido = usu_Apellido;
         this.Usu_Tipo = usu_Tipo;
         this.Usu_Celular = usu_Celular;
-        this.Usu_Correo = usu_Correo;
+        this.email = email;
         this.Usu_Ficha = usu_Ficha;
         this.prestamos = prestamos;
     }
@@ -94,11 +94,11 @@ public class Usuario {
     }
 
     public String getUsu_Correo() {
-        return Usu_Correo;
+        return email;
     }
 
     public void setUsu_Correo(String usu_Correo) {
-        Usu_Correo = usu_Correo;
+        email = usu_Correo;
     }
 
     public String getUsu_Ficha() {
@@ -125,7 +125,7 @@ public class Usuario {
                 ", Usu_Apellido='" + Usu_Apellido + '\'' +
                 ", Usu_Tipo='" + Usu_Tipo + '\'' +
                 ", Usu_Celular='" + Usu_Celular + '\'' +
-                ", Usu_Correo='" + Usu_Correo + '\'' +
+                ", Usu_Correo='" + email + '\'' +
                 ", Usu_Ficha='" + Usu_Ficha + '\'' +
                 '}';
     }
