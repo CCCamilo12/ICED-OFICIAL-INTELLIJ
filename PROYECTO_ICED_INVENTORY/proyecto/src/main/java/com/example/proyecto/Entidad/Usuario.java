@@ -40,7 +40,7 @@ public class Usuario {
 
     public Usuario() {
     }
-    public Usuario(String usu_Documento, String usu_Nombre, String usu_Apellido, String usu_Tipo, String usu_Celular, String usu_Correo, String usu_Ficha, Set<Prestamo> prestamos) {
+    public Usuario(String usu_Documento, String usu_Nombre, String usu_Apellido, String usu_Tipo, String usu_Celular, String UsuCorreo, String usu_Ficha, Set<Prestamo> prestamos) {
         this.Usu_Documento = usu_Documento;
         this.Usu_Nombre = usu_Nombre;
         this.Usu_Apellido = usu_Apellido;
@@ -93,12 +93,12 @@ public class Usuario {
         Usu_Celular = usu_Celular;
     }
 
-    public String getUsu_Correo() {
+    public String getUsuCorreo() {
         return email;
     }
 
-    public void setUsu_Correo(String usu_Correo) {
-        email = usu_Correo;
+    public void setUsuCorreo(String usuCorreo) {
+        email = email;
     }
 
     public String getUsu_Ficha() {

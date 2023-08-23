@@ -26,14 +26,14 @@ public class ControladorInicio {
     public String index(Model model,@AuthenticationPrincipal OidcUser principal){
         if (principal != null){
             System.out.println(principal.getClaims());
-            User userr =this.userServicio.getCrearUser(principal.getClaims());
-            model.addAttribute("userr",userr);
-            if (userr.getRol().equals("Usuario")){
-                return "redirect:/Informacion.html";
+            User user =this.userServicio.getCrearUser(principal.getClaims());
+            model.addAttribute("user",user);
+            if (user.getRol().equals("Usuario")){
+                return "Equipos";
 
             }
             else{
-                return "redirect:/Equipos.html";
+                return "Principal";
             }
 
         }
@@ -41,4 +41,21 @@ public class ControladorInicio {
             return "index";
         }
     }
+
+    @GetMapping("/index")
+    public String indexPage(){
+        return "index";
+    }
+
+    @GetMapping("/Principal")
+    public String PrincipalPage(){
+        return "Principal";
+    }
+
+    @GetMapping("/Equipos")
+    public String EquiposPage(){
+        return "Equipos";
+    }
+
 }
+

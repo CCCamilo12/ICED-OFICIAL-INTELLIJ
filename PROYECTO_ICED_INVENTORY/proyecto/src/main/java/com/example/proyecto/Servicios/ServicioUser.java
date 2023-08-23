@@ -36,7 +36,7 @@ public class ServicioUser {
         User user=buscarEmail(email);
         String rol="";
         if (user==null){
-            String name = (String) dataUser.get("nickname");
+            String nickname = (String) dataUser.get("nickname");
             String imag = (String) dataUser.get("picture");
             String auth_id = (String) dataUser.get("sub");
             if (reposiUsu.findByEmail(email)!=null){
@@ -45,7 +45,7 @@ public class ServicioUser {
             else{
                 rol="otro";
             }
-            User nuevo = new User(email,name,imag,auth_id,rol);
+            User nuevo = new User(email,nickname,imag,auth_id,rol);
             return this.crear(nuevo);
         }else{
             return user;
