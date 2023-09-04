@@ -28,12 +28,12 @@ public class ControladorInicio {
             System.out.println(principal.getClaims());
             User user =this.userServicio.getCrearUser(principal.getClaims());
             model.addAttribute("user",user);
-            if (user.getRol().equals("Usuario")){
-                return "Equipos";
+            if (user.getRol().equals("Usuario")) {
+                return "Principal";
 
             }
             else{
-                return "Principal";
+                return "Equipos";
             }
 
         }
@@ -53,9 +53,15 @@ public class ControladorInicio {
     }
 
     @GetMapping("/Equipos")
-    public String EquiposPage(){
+    public String EquiposPage(Model model,@AuthenticationPrincipal OidcUser principal){
+        User user =this.userServicio.getCrearUser(principal.getClaims());
+        model.addAttribute("user",user);
         return "Equipos";
     }
+
+
+
+
 
 }
 

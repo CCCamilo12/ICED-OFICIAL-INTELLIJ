@@ -9,139 +9,181 @@
     <script src="https://kit.fontawesome.com/3d7a846b01.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body id="body" style="max-height: 100vh; overflow-y: scroll;">
-    <header>
-        <div class="icon__menu">
-            <i class="fas fa-bars" id="btn_open"></i>
-        </div>
-
-
-    </header>
-
-    <div class="menu__side" id="menu_side">
-
-        <div class="options__menu"> 
-
-            <a href="/Equipos.html" class="selected" >
-                <div class="option">
-                    <i class="fas fa-home" title="Inicio"></i>
-                    <h4>Dispositivos</h4>
-                </div>
-            </a>
-
-            <a href="/Usuarios.html">
-                <div class="option">
-                    <i class="fa-solid fa-cloud"></i>
-                    <h4>Usuarios</h4>
-                </div>
-            </a>
-            
-            <a href="/Prestamos.html">
-                <div class="option">
-                    <i class="fa-solid fa-database"></i>
-                    <h4>Prestamos</h4>
-                </div>
-            </a>
-
-            <a href="/Sanciones.html">
-                <div class="option">
-                    <i class="fa-solid fa-code"></i>
-                    <h4>Sanciones</h4>
-                </div>
-            </a>
-
-            <a href="#">
-                <div class="option">
-                    <i class="fa-solid fa-users"></i>
-                    <h4>Contacto</h4>
-                </div>
-            </a>
-
-            <a href="#">
-                <div class="option">
-                    <i class="fa-solid fa-arrows-rotate"></i>
-                    <h4>Nosotros</h4>
-                </div>
-            </a>
-
-            <a href="#">
-                <div class="option">
-                    <i class="fa-solid fa-plus"></i>
-                    <h4>Nosotros</h4>
-                </div>
-            </a>
-
-        </div>
+<header>
+    <div class="icon__menu">
+        <i class="fas fa-bars" id="btn_open"></i>
+    </div>
 
     </div>
 
+</header>
 
-    <section class="cont">
+<div class="menu__side" id="menu_side">
 
-        <div th:text="${user.getEmail()}"></div>
+    <div class="options__menu">
 
-        <div th:text="${user.getRol()}"></div>
-
-        <div th:crs="${user.getImg()}"></div>
-
-        <div class="contenedor1">
-            <h1>Lista de dispositivos en el centro</h1>
-        </div>
-        
-        <div class="contenedor2">    
-            <div>
-                <table id="tabla1">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Dispositivo</th>
-                            <th>Modelo</th>
-                            <th>Color</th>
-                            <th>Serial</th>
-                            <th>Estado</th>
-                            <th>Especialidad</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla1-body"></tbody>
-                </table>
+        <a href="/vistas-administrador-html/Equipos.html" class="selected">
+            <div class="option">
+                <i class="fas fa-laptop"></i>
+                <h4>Equipos</h4>
             </div>
+        </a>
+
+        <a href="/vistas-administrador-html/Usuarios.html">
+            <div class="option">
+                <i class="fa-solid fa-users"></i>
+                <h4>Usuarios</h4>
+            </div>
+        </a>
+
+        <a href="/vistas-administrador-html/Prestamos.html">
+            <div class="option">
+                <i class="fas fa-server"></i>
+                <h4>Prestamos</h4>
+            </div>
+        </a>
+
+        <a href="/vistas-administrador-html/Sanciones.html">
+            <div class="option">
+                <i class="fas fa-exclamation-circle"></i>
+                <h4>Sanciones</h4>
+            </div>
+        </a>
+
+
+        <a href="#">
+            <div class="option">
+                <i class="fas fa-box-open"></i>
+                <h4>Devoluciones</h4>
+            </div>
+        </a>
+
+
+        <a href="#">
+            <div class="option">
+                <i class="fas fa-phone"></i>
+                <h4>Contacto</h4>
+            </div>
+        </a>
+
+
+        <a href="#">
+            <div class="option">
+                <i class="fas fa-user-circle"></i>
+                <h4>Nosotros</h4>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+
+
+<section class="cont">
+
+    <div class="cabezera">
+        <h1>Lista de Dispositivos</h1>
+    </div>
+
+    <div class="contenedor1">
+        <button class="btnInsertar">Insertar</button>
+        <label for="id_equipoo"><input type="text" id="id_equipoo" name="id_equipoo" placeholder="equipo"></label>
+        <button type="button" id="BuscarEquipo" class="btn btn-danger w-100 fs-5 mb-3">Buscar</button>
+    </div>
+
+
+    <div class="contador1">Activos</div>
+
+    <div class="contador2">
+        <div class="icon-container">
+            <i class="fas fa-laptop"></i>
+            <h1 class="cantidad">No existen datos</h1>
         </div>
+    </div>
 
-        <div class="contenedor3">
 
-            <h1>Insertar Equipo</h1>
+    <div class="contador3">Inactivos</div>
 
-            <form action="" id="formulario">
-            
+
+    <div class="contenedor3">
+        <div>
+            <table id="tabla1">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Dispositivo</th>
+                    <th>Modelo</th>
+                    <th>Color</th>
+                    <th>Serial</th>
+                    <th>Estado</th>
+                    <th>Especialidad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="tabla1-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--modal1-->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Actualizar Registro</h2>
+            <form id="updateForm">
+                <!-- Campos para actualizar los datos -->
                 <div class="mb-3">
-                    <select class="form-control" name="tipo_de_equipo" id="equi_tipo" onchange="showOtherTipoField()">
+                    <input type="text" class="form-control" id="equi_id_actualizar" name="equi_id_actualizar" placeholder="ID del Equipo">
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="equi_tipo_actualizar" name="equi_tipo_actualizar">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="equi_modelo_actualizar" name="equi_modelo_actualizar" placeholder="Modelo">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="equi_color_actualizar" name="equi_color_actualizar" placeholder="Color">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="equi_serial_actualizar" name="equi_serial_actualizar" placeholder="Serial">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="equi_estado_actualizar" name="equi_estado_actualizar" placeholder="Estado">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="equi_especialidad_actualizar" name="equi_especialidad_actualizar" placeholder="Especialidad">
+                </div>
+                <div class="mb-3">
+                    <button type="button" id="ActualizarEquipo" class="btn btn-primary w-100 fs-5 mb-3">Actualizar Equipo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ... -->
+
+
+    <!--modal2-->
+    <div id="myModal2" class="modal">
+        <div class="modal-content">
+            <span class="close2">&times;</span>
+            <h2>Insertar Registro</h2>
+            <form id="insertForm">
+
+
+
+                <div class="mb-3">
+                    <select id="equi_tipo">
                         <option value="" selected>Tipo</option>
-                        <option value="portatil">Portátil</option>
+                        <option value="portatil">Portatil</option>
                         <option value="video_beam">Video Beam</option>
                         <option value="cable_hdmi">Cable HDMI</option>
-                        <option value="Otro">Otro</option>
                     </select>
-                </div>
-            
-                <div class="mb-3" id="otro_tipo_div" style="display: none;">
-                    <input type="text" class="form-control" name="otro_tipo_de_equipo" id="otro_tipo_de_equipo" placeholder="Ingrese otro Tipo">
-                </div>
-            
-                <script>
-                    function showOtherTipoField() {
-                        var selectedValue = document.getElementById("equi_tipo").value;
-                        var otroTipoDiv = document.getElementById("otro_tipo_div");
-            
-                        if (selectedValue === "Otro") {
-                            otroTipoDiv.style.display = "block";
 
-                            
-                        } else {
-                            otroTipoDiv.style.display = "none";
-                        }
-                    }
-                </script>
+
+                </div>
 
                 <div class="mb-3">
                     <select class="form-control" name ="modelo de equipo" id="equi_modelo">
@@ -152,10 +194,6 @@
                     </select>
                 </div>
 
-
-
-
-
                 <div class="mb-3">
                     <select class="form-control" name="color de equipo" id="equi_color">
                         <option value="" selected>Color</option>
@@ -163,7 +201,7 @@
                         <option value="Negro">Negro</option>
 
                     </select>
-                   
+
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" id="equi_serial" name="serial de equipo" placeholder="Serial">
@@ -190,82 +228,31 @@
                 </div>
             </form>
         </div>
-        
-        <div class="contenedor4">
-            <h1>Actualizar Equipo</h1>
-            <form id="formulario-actualizar">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="equi_id_actualizar" name="equi_id_actualizar" placeholder="ID del Equipo">
-                </div>
-
-                <div class="mb-3">
-                    <select class="form-control" name="equi_tipo_actualizar" id="equi_tipo_actualizar">
-                        <option value="" selected>Tipo</option>
-                        <option value="portatil">Portatil</option>
-                        <option value="video_beam">Video Beam</option>
-                        <option value="cable_hdmi">Cable HDMI</option>
-                    </select>
-                    
-                    
-                </div>
-
-                <div class="mb-3">
-                    <select class="form-control" name="equi_modelo_actualizar" id="equi_modelo_actualizar">
-                        <option value="" selected>Modelo</option>
-                        <option value="Hewelt Packard">Hewelt Packard</option>
-                        <option value="Lenovo">Lenovo</option>
-                        <option value="HP">HP</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="equi_color_actualizar" name="equi_color_actualizar" placeholder="Color">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="equi_serial_actualizar" name="equi_serial_actualizar" placeholder="Serial">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="equi_estado_actualizar" name="equi_estado_actualizar" placeholder="Estado">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="equi_especialidad_actualizar" name="equi_especialidad_actualizar" placeholder="Especialidad">
-                </div>
-                <div class="mb-3">
-                    <button type="button" id="ActualizarEquipo" class="btn btn-primary w-100 fs-5 mb-3">Actualizar Equipo</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="contenedor5">
-            <h1>Eliminar Equipo</h1>
-        
-            <label for=""><input type="text" id="codigo_equipo" name="codigo_equipo" placeholder="Código del Equipo"></label>
-            <button type="button" id="EliminarEquipo" class="btn btn-danger w-100 fs-5 mb-3">Eliminar</button>
-        </div>
-        
-        <div class="contenedor6">
-
-            <h1>Buscar Equipo</h1>
-
-            <label for=""><input type="text" id="id_equipoo" name="id_equipoo" placeholder="ID del Equipo"></label>
-            <button type="button" id="BuscarEquipo" class="btn btn-danger w-100 fs-5 mb-3">Buscar</button>
-            
-        </div>
-        
-        
-    </section>
-
-
-   
-
-
- 
+    </div>
+    <!---->
 
 
 
 
-   
-    <script src="js/script.js"></script>
-    <script src="js/Metodos-Equipos.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+
+
+<script src="/js/script.js"></script>
+<script src="/js/Metodos-Equipos.js"></script>
+<script src="/js/script3.js"></script>
 </body>
 </html>
