@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios</title>
-    <link rel="stylesheet" href="/css/Usuarios.css">
+    <title>Prestamos</title>
+    <link rel="stylesheet" href="/css/Prestamos.css">
     <script src="https://kit.fontawesome.com/3d7a846b01.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body id="body" style="max-height: 100vh; overflow-y: scroll;">
 <header>
@@ -25,21 +26,21 @@
 
     <div class="options__menu">
 
-        <a href="/vistas-administrador-html/Equipos.html">
+        <a href="/vistas-administrador-html/Equipos.html" >
             <div class="option">
                 <i class="fas fa-laptop"></i>
                 <h4>Equipos</h4>
             </div>
         </a>
 
-        <a href="/vistas-administrador-html/Usuarios.html" class="selected">
+        <a href="/vistas-administrador-html/Usuarios.html">
             <div class="option">
                 <i class="fa-solid fa-users"></i>
                 <h4>Usuarios</h4>
             </div>
         </a>
 
-        <a href="/vistas-administrador-html/Prestamos.html">
+        <a href="/vistas-administrador-html/Prestamos.html" class="selected">
             <div class="option">
                 <i class="fas fa-server"></i>
                 <h4>Prestamos</h4>
@@ -80,20 +81,26 @@
     </div>
 </div>
 
+
+
 <section class="cont">
 
-
     <div class="cabezera">
-        <h1>Lista de Usuarios</h1>
+        <h1>Lista de Prestamos</h1>
     </div>
 
+    <div class="contenedor1">
+        <button class="btnInsertar">Insertar</button>
+        <label for="id_equipoo"><input type="text" id="id_equipoo" name="id_equipoo" placeholder="equipo"></label>
+        <button type="button" id="BuscarPrestamo" class="btn btn-danger w-100 fs-5 mb-3">Buscar Prestamo</button>
+    </div>
 
 
     <div class="contador1">Activos</div>
 
     <div class="contador2">
         <div class="icon-container">
-            <i class="fa-solid fa-users"></i>
+            <i class="fas fa-laptop"></i>
             <h1 class="cantidad">No existen datos</h1>
         </div>
     </div>
@@ -102,65 +109,56 @@
     <div class="contador3">Inactivos</div>
 
 
-    <div class="contenedor1">
-        <button class="btnInsertar">Insertar</button>
-        <label for=""><input type="text" id="id_usuarioo" name="id_usuarioo" placeholder="Documento del Usuario"></label>
-        <button type="button" id="BuscarUsuario" class="">Buscar</button>
-    </div>
-
     <div class="contenedor3">
         <div>
             <table id="tabla1">
                 <thead>
                 <tr>
-                    <th>Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Tipo</th>
-                    <th>Celular</th>
-                    <th>Correo</th>
-                    <th>Ficha</th>
+                    <th>ID PRESTAMO</th>
+                    <th>FECHA PRESTAMO</th>
+                    <th>HORA PRESTAMO</th>
+                    <th>TIEMPO</th>
+                    <th>OBSERVACION ENTREGA </th>
+                    <th>ID EQUIPO </th>
+                    <th>DOCUMENTO</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
-                <tbody id="tabla2-body"></tbody>
+                <tbody id="tabla1-body"></tbody>
             </table>
         </div>
     </div>
-
-
-
-
 
     <!--modal1-->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Actualizar Registro</h2>
-            <form id="formulario-actualizar">
+            <form id="updateForm">
+                <!-- Campos para actualizar los datos -->
                 <div class="mb-3">
-                    <input type="number" class="form-control" id="usu_Documento_id_actualizar" name="usu_Documento_id_actualizar" placeholder="Documento" >
+                    <input type="text" class="form-control" id="equi_id_actualizar" name="equi_id_actualizar" placeholder="ID del Equipo">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Nombre_id_actualizar" name="usu_Nombre_id_actualizar" placeholder="Nombre">
+                    <input type="text" id="equi_tipo_actualizar" name="equi_tipo_actualizar">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Apellido_id_actualizar" name="usu_Apellido_id_actualizar" placeholder="Apellido">
+                    <input type="text" class="form-control" id="equi_modelo_actualizar" name="equi_modelo_actualizar" placeholder="Modelo">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Tipo_id_actualizar" name="Tipo usu_Tipo_id_actualizar Usuario" placeholder="Tipo de Usuario">
+                    <input type="text" class="form-control" id="equi_color_actualizar" name="equi_color_actualizar" placeholder="Color">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Celular_id_actualizar" name="usu_Celular_id_actualizar" placeholder="Celular">
+                    <input type="text" class="form-control" id="equi_serial_actualizar" name="equi_serial_actualizar" placeholder="Serial">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Correo_id_actualizar" name="usu_Correo_id_actualizar" placeholder="Correo">
+                    <input type="text" class="form-control" id="equi_estado_actualizar" name="equi_estado_actualizar" placeholder="Estado">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Ficha_id_actualizar" name="usu_Ficha_id_actualizar" placeholder="Ficha">
+                    <input type="text" class="form-control" id="equi_especialidad_actualizar" name="equi_especialidad_actualizar" placeholder="Especialidad">
                 </div>
                 <div class="mb-3">
-                    <button type="button" id="ActualizarUsuario" class="btn btn-primary w-100 fs-5 mb-3">Actualizar usuario</button>
+                    <button type="button" id="ActualizarEquipo" class="btn btn-primary w-100 fs-5 mb-3">Actualizar Equipo</button>
                 </div>
             </form>
         </div>
@@ -172,51 +170,55 @@
     <div id="myModal2" class="modal">
         <div class="modal-content">
             <span class="close2">&times;</span>
-            <h2>Insertar Registro</h2>
-            <form action="" id="formulario">
+            <h2>Insertar Prestamo</h2>
+            <form id="insertForm">
+                <div class="mb-3">
+                    <label for="pres_Fec_Entrega">Fecha de Entrega:</label>
+                    <input type="date" class="form-control" name="pres_Fec_Entrega" id="pres_Fec_Entrega" required>
+                </div>
 
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Documento" name="Documento" placeholder="Documento">
+                    <label for="pres_Hora_Entrega">Hora de Entrega:</label>
+                    <input type="time" class="form-control" name="pres_Hora_Entrega" id="pres_Hora_Entrega" required>
                 </div>
+
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Nombre" name ="Nombre" placeholder="Nombre">
+                    <label for="pres_Tiempo_Limite">Tiempo Límite:</label>
+                    <input type="text" class="form-control" name="pres_Tiempo_Limite" id="pres_Tiempo_Limite" required>
                 </div>
+
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Apellido" name ="Apellido" placeholder="Apellido">
+                    <label for="pres_Observaciones_Entrega">Observaciones de Entrega:</label>
+                    <textarea class="form-control" name="pres_Observaciones_Entrega" id="pres_Observaciones_Entrega" required></textarea>
                 </div>
+
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Tipo" name="Tipo de Usuario" placeholder="Tipo de Usuario">
+                    <label for="equ_id_equipos">ID de Equipo:</label>
+                    <input type="text" class="form-control" name="equ_id_equipos" id="equ_id_equipos" required>
                 </div>
+
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Celular" name="Celular" placeholder="Celular">
+                    <label for="usu_Documento_usurios">Documento de Usuario:</label>
+                    <input type="text" class="form-control" name="usu_Documento_usurios" id="usu_Documento_usurios" required>
                 </div>
+
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Correo" name="Correo" placeholder="Correo">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="usu_Ficha" name="Ficha" placeholder="Ficha">
-                </div>
-                <div class="mb-3">
-                    <button type="button" id="AgregarUsuario" class=" btn btn-primary w-100 fs-5 mb-3">Insertar Usuario</button>
+                    <button type="button" id="AgregarPrestamo" class="btn btn-primary w-100 fs-5 mb-3">Insertar Prestamo</button>
                 </div>
             </form>
-
         </div>
     </div>
+
+
     <!---->
-
-
 
 
 </section>
 
 
 
-
-
 <script src="/js/script.js"></script>
+<script src="/js/Metodos-Prestamos.js"></script>
 <script src="/js/script3.js"></script>
-<script src="/js/metodos-usuarios.js"></script>
-
 </body>
 </html>

@@ -1,62 +1,92 @@
+(document).ready(function() {
+    // listar
+    function obtenerListaPrestamos() {
+        $.ajax({
+            url: "http://localhost:8080/ListarPrestamos",
+            type: "GET",
+            dataType: "json",
+            success: function(respuesta) {
+                console.log(respuesta);
+                let tablaBody = $("#tabla1-body");
+                tablaBody.empty(); // Limpiar el contenido anterior de la tabla
 
+                respuesta.forEach(function(prestamo) {
+                    tablaBody.append(`<tr>
+                        <td>${prestamo.presId}</td>
+                        <td>${prestamo.pres_Fec_Entrega}</td>
+                        <td>${prestamo.pres_Hora_Entrega}</td>
+                        <td>${prestamo.pres_Tiempo_Limite}</td>
+                        <td>${prestamo.pres_Observaciones_Entrega}</td>
+                        <td>${prestamo.equ_id_equipos.equ_id}</td>
+                        <td>${prestamo.usu_Documento_usurios.usu_Documento}</td>
+                    </tr>`);
+                });
+            },
+            error: function() {
+                console.log("Error al obtener la lista de préstamos");
+            }
+        });
+    }
+
+// Agregar un préstamo
 $(document).ready(function() {
-    // Agregar un préstamo
-    
-    $("#agregarPrestamoForm").submit(function(event) {
+    // Manejador del botón AgregarPrestamo
+    $('#AgregarPrestamo').on('click', function(event) {
         event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
-        
-        // Obtener los valores del formulario
-        let fechaEntrega = $("#fechaEntrega").val();
-        let horaEntrega = $("#horaEntrega").val();
-        let tiempoLimite = $("#tiempoLimite").val();
-        let observacionesEntrega = $("#observacionesEntrega").val();
-        let equipoId = $("#equipoId").val();
-        let usuarioDocumento = $("#usuarioDocumento").val();
 
-        if (fechaEntrega===''|| horaEntrega===''|| tiempoLimite==='' ||observacionesEntrega===''|| equipoId===''||usuarioDocumento===''){
-            alert("por favor completa todos los campos")
+        // Obtener los valores del formulario
+        let pres_Fec_Entrega = $("#pres_Fec_Entrega").val();
+        let pres_Hora_Entrega = $("#pres_Hora_Entrega").val();
+        let pres_Tiempo_Limite = $("#pres_Tiempo_Limite").val();
+        let pres_Observaciones_Entrega = $("#pres_Observaciones_Entrega").val();
+        let equ_id_equipos = $("#equ_id_equipos").val();
+        let usu_Documento_usurios = $("#usu_Documento_usurios").val();
+
+        if (pres_Fec_Entrega === '' || pres_Hora_Entrega === '' || pres_Tiempo_Limite === '' || pres_Observaciones_Entrega === '' || equ_id_equipos === '' || usu_Documento_usurios === '') {
+            alert("Por favor completa todos los campos");
             return;
         }
+
         // Crear el objeto de datos del préstamo
         let nuevoPrestamo = {
-            fechaEntrega: fechaEntrega,
-            horaEntrega: horaEntrega,
-            tiempoLimite: tiempoLimite,
-            observacionesEntrega: observacionesEntrega,
+            pres_Fec_Entrega: pres_Fec_Entrega,
+            pres_Hora_Entrega: pres_Hora_Entrega,
+            pres_Tiempo_Limite: pres_Tiempo_Limite,
+            pres_Observaciones_Entrega: pres_Observaciones_Entrega,
             equipo: {
-                equ_id: equipoId
+                equ_id_equipos: equ_id_equipos
             },
             usuario: {
-                usu_Documento: usuarioDocumento
+                usu_Documento_usurios: usu_Documento_usurios
             }
         };
+
         let datosenvio = JSON.stringify(nuevoPrestamo);
-        console.log(nuevoPrestamo);
-        console.log(datosenvio);
 
         // Enviar la solicitud AJAX para agregar el préstamo
         $.ajax({
-            url: "http://localhost:8080/InsertarPrestamo/",
+            url: `/insertarPrestamo/{Eq}/{Us}/${equ_id_equipos}/${usu_Documento_usurios}`,
             type: "POST",
-            dataType: "json", // Corrección aquí
-            contentType: "application/JSON",
+            dataType: "json",
+            contentType: "application/json",
             data: datosenvio,
             success: function(respuesta) {
                 console.log(respuesta);
                 // Actualizar la lista de préstamos después de agregar uno nuevo
                 obtenerListaPrestamos();
                 // Restablecer los valores del formulario
-                $("#agregarPrestamoForm")[0].reset();
+                $("#insertForm")[0].reset();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("Error al agregar el préstamo - Código de estado: " + jqXHR.status);
                 obtenerListaPrestamos();
             }
         });
-        
     });
+
     // Llamar a la función para obtener la lista de préstamos al cargar la página
     obtenerListaPrestamos();
+});
 });
 
 // Función para obtener la lista de préstamos
@@ -74,7 +104,7 @@ function obtenerListaPrestamos() {
                 tablaBody.append(`<tr>
                     <td>${prestamo.presId}</td>
                     <td>${prestamo.fechaEntrega}</td>
-                    <td>${prestamo.horaEntrega}</td>
+                    <td>${prestamo.pres_Tiempo_Limite}</td>
                     <td>${prestamo.tiempoLimite}</td>
                     <td>${prestamo.observacionesEntrega}</td>
                     <td>${prestamo.equipo.equ_id}</td>
@@ -88,35 +118,34 @@ function obtenerListaPrestamos() {
     });
 }
 
-
-//Buscar Prestamo
+//////////////////////////////Buscar Prestamo//////////////////////////////////////////////////////////////////////////////////////
 $('#BuscarPrestamo').on('click', function() {
     let tablaEquipos = $("#tabla1-body");
     tablaEquipos.empty(); // Limpiar el contenido anterior de la tabla
-    let dato = $("#pres_idddd").val();
+    let dato = $("#id_equipoo").val();
     $.ajax({
         url: "http://localhost:8080/BuscarPrestamo/" + dato,
         type: "GET",
         dataType: "json",
         success: function(respuesta) {
             if (respuesta && respuesta.presId) {
+                let equipoInfo = respuesta.equipo ? respuesta.equipo : {}; // Verificar si existe el campo 'equipo'
+                let usuarioInfo = respuesta.usuario ? respuesta.usuario : {}; // Verificar si existe el campo 'usuario'
                 tablaEquipos.append(`<tr>
                     <td>${respuesta.presId}</td>
-                    <td>${respuesta.fechaEntrega}</td>
-                    <td>${respuesta.fechaDevolucion}</td>
-                    <td>${respuesta.horaEntrega}</td>
-                    <td>${respuesta.horaDevolucion}</td>
-                    <td>${respuesta.tiempoLimite}</td>
-                    <td>${respuesta.observacionesEntrega}</td>
-                    <td>${respuesta.observacionesRecibido}</td>
-                    <td>${respuesta.equipo.equ_id}</td>
-                    <td>${respuesta.usuario.usu_Documento}</td>
+                    <td>${respuesta.pres_Fec_Entrega}</td>
+                    <td>${respuesta.pres_Hora_Entrega}</td>
+                    <td>${respuesta.pres_Tiempo_Limite}</td>
+                    <td>${respuesta.pres_Observaciones_Entrega}</td>
+                    <td>${respuesta.equ_id_equipos.equ_id|| ''}</td> // Acceder al subcampo 'equ_id' o mostrar cadena vacía
+                    <td>${respuesta.usu_Documento_usurios.usu_Documento || ''}</td> // Acceder al subcampo 'usu_Documento' o mostrar cadena vacía
                 </tr>`);
             } else {
                 alert("No se encontró el préstamo en la base de datos");
             }
         },
-        error: function(jqXHR, errorThrown) {
+
+        error: function(jqXHR, textStatus, errorThrown) {
             if (jqXHR.status === 404) {
                 alert("No se encontró el préstamo en la base de datos");
             } else {
@@ -125,6 +154,7 @@ $('#BuscarPrestamo').on('click', function() {
         }
     });
 });
+///////////////////////// final Buscar Prestamo/////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Eliminar prestamo
 $('#EliminarPrestamo').on('click', function() {
@@ -157,14 +187,14 @@ $('#EliminarPrestamo').on('click', function() {
 // ACTUALIZAR EQUIPO
 $('#ActualizarPrestamo').on('click',function(){
     let presId = $('#presId').val();
-    
+
     // Realizar una solicitud al servidor para obtener los datos actuales del equipo
     $.ajax({
         url: "http://localhost:8080/BuscarEquipo/" + presId,
         type: "GET",
         success: function(respuesta){
             // Aquí obtienes los datos actuales del equipo desde la respuesta del servidor
-            
+
             // Obtener los nuevos valores del formulario
             let fechaEntrega = $('#fechaEntrega_actualizar').val();
             let fechaDevolucion = $('#fechaDevolucion_actualizar').val();
@@ -172,8 +202,8 @@ $('#ActualizarPrestamo').on('click',function(){
             let tiempoLimite = $('#tiempoLimite_actualizar').val();
             let observacionesEntrega = $('#observacionesEntrega_actualizar').val();
             let observacionesRecibido = $('#observacionesRecibido_actualizar').val();
-            
-            
+
+
             // Combinar los datos actuales con los nuevos valores
             let datosActualizados = {
                 presId: presId,
@@ -186,7 +216,7 @@ $('#ActualizarPrestamo').on('click',function(){
             };
 
             let datosenvio = JSON.stringify(datosActualizados);
-            
+
             $.ajax({
                 url: "http://localhost:8080/ActualizarEquipo/",
                 type: "POST",
@@ -194,7 +224,7 @@ $('#ActualizarPrestamo').on('click',function(){
                 contentType: "application/JSON",
                 success: function(respuesta){
                     alert(respuesta);
-                    listarequipo();   
+                    listarequipo();
                 }
             });
         },
@@ -220,14 +250,17 @@ function cargarEquipos() {
         success: function(respuesta) {
             let selectEquipos = $("#equipoId");
             selectEquipos.empty();
-            
+
             for (let i = 0; i < respuesta.length; i++) {
-                let option = $("<option></option>").attr("value", respuesta[i].equ_id).text(respuesta[i].equi_tipo);
+                let equipo = respuesta[i];
+                let optionText = equipo.equ_id + " - " + equipo.equi_serial;
+                let option = $("<option></option>").attr("value", equipo.equi_serial).text(optionText);
                 selectEquipos.append(option);
             }
         }
     });
 }
+
 
 function cargarUsuarios() {
     $.ajax({
@@ -235,19 +268,24 @@ function cargarUsuarios() {
         type: "GET",
         dataType: "JSON",
         success: function(respuesta) {
-            let selectUsuarios = $("#usuarioId");
+            let selectUsuarios = $("#usuarioDocumento");
             selectUsuarios.empty();
+
             for (let i = 0; i < respuesta.length; i++) {
-                let option = $("<option></option>").attr("value", respuesta[i].usu_Documento).text(respuesta[i].usu_Nombre + " " + respuesta[i].usu_Apellido);
+                let usuario = respuesta[i];
+                let optionText = usuario.usu_Documento + " - " + usuario.usu_Nombre + " " + usuario.usu_Apellido;
+                let option = $("<option></option>").attr("value", usuario.usu_Documento).text(optionText);
                 selectUsuarios.append(option);
             }
         }
     });
 }
 
+
 // carga los datos de los selec que hay en el formulario
 $(document).ready(function() {
     cargarEquipos();
     cargarUsuarios();
 });
+
 

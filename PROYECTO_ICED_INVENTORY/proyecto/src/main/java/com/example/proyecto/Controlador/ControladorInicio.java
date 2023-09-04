@@ -30,10 +30,9 @@ public class ControladorInicio {
             model.addAttribute("user",user);
             if (user.getRol().equals("Usuario")) {
                 return "Principal";
-
             }
             else{
-                return "Equipos";
+                return "Usuarios";
             }
 
         }
@@ -57,6 +56,13 @@ public class ControladorInicio {
         User user =this.userServicio.getCrearUser(principal.getClaims());
         model.addAttribute("user",user);
         return "Equipos";
+    }
+
+    @GetMapping("/Usuarios")
+    public String UsuariosPage(Model model,@AuthenticationPrincipal OidcUser principal){
+        User user =this.userServicio.getCrearUser(principal.getClaims());
+        model.addAttribute("user",user);
+        return "Usuarios";
     }
 
 

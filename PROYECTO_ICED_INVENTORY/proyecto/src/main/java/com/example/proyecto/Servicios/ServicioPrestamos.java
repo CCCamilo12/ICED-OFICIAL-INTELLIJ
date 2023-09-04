@@ -37,10 +37,6 @@ public class ServicioPrestamos {
         }
     }
 
-
-
-
-
     public String actualizarPrestamo(String Eq, String Us, Prestamo prestamo){
         if (reposiEqui.findById(Eq).isPresent() && reposiUsu.findById(Us).isPresent()){
             Equipo eq = reposiEqui.findById(Eq).get();
