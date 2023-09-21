@@ -12,7 +12,7 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(a -> a
-                .antMatchers("/","/static/**","/agregarPrestamo/12121212/Isbn01").permitAll()
+                .antMatchers("/","/static/**").permitAll()
                 .anyRequest().authenticated()
         ).exceptionHandling(e -> e
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Principal</title>
-        <link rel="stylesheet" th:href="@{/css/Principal.css}">
+        <link rel="stylesheet" href="/css/Principal.css">
         <script src="@{/js/script.js}"></script>
 
 </head>
@@ -23,12 +23,8 @@
                 <img src="/images/iced.png" alt="">
                 <ul>
                     <li><a href="#" id="selected">Inicio</a></li>
-                    <li><a th:href="@{/informacion}">informacion</a></li>
                     <li><a href="#">Nosotros</a></li>
                     <li><a href="#">Contactos</a></li>
-                    <div sec:authorize="isAuthenticated()">
-                        <a th:href="@{/logout}">Cerrar Sesion</a>
-                    </div>
                 </ul>
             </nav>
         </div>
