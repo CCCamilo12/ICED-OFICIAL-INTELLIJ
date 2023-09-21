@@ -1,10 +1,7 @@
 package com.example.proyecto.Entidad;
 
-import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.http.ResponseEntity;
 
-
+import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
 
